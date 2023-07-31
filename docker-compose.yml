@@ -1,0 +1,17 @@
+version: "3.8"
+services:
+  dev-mysql:
+    image: mysql:8.0.28
+    platform: linux/amd64
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_USER: udemy
+      MYSQL_ROOT_PASSWORD: udemy
+      MYSQL_DB: udemy
+    restart: always
+    networks:
+      - lesson
+# dev-mysqlはlessonという名前のネットワークに参加しており、lessonに参加している葉kのコンテナ間で通信可能
+networks:
+  lesson:
