@@ -6,9 +6,10 @@ services:
     ports:
       - 3306:3306
     environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
       MYSQL_USER: udemy
-      MYSQL_ROOT_PASSWORD: udemy
-      MYSQL_DB: udemy
+      MYSQL_PASSWORD: udemy
+      MYSQL_DATABASE: udemy
     restart: always
     networks:
       - lesson
