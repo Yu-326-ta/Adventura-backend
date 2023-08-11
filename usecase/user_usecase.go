@@ -39,7 +39,7 @@ func (uu *userUsecase) SignUp(user model.User) (model.UserResponse, error) {
 	}
 	// CreateUserが成功すると参照渡しのためnewUserの値が新しくなっているのでUserResponseを新しい情報に変更して返す
 	resUser := model.UserResponse{
-		ID: newUser.ID,
+		ID:    newUser.ID,
 		Email: newUser.Email,
 	}
 	return resUser, nil
@@ -48,7 +48,7 @@ func (uu *userUsecase) SignUp(user model.User) (model.UserResponse, error) {
 func (uu *userUsecase) Login(user model.User) (string, error) {
 	storedUser := model.User{}
 	if err := uu.ur.GetUserByEmail(&storedUser, user.Email); err != nil {
-		return "", err 
+		return "", err
 	}
 	// データベースに保存しているハッシュ化したパスワードと送られてくる平文のパスワード比較
 	err := bcrypt.CompareHashAndPassword([]byte(storedUser.Password), []byte(user.Password))
@@ -58,7 +58,7 @@ func (uu *userUsecase) Login(user model.User) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"user_id": storedUser.ID,
 		// jwtの有効期限の設定（ここでは12時間）
-		"exp":     time.Now().Add(time.Hour * 12).Unix(),
+		"exp": time.Now().Add(time.Hour * 12).Unix(),
 	})
 	// tokenに対してSignedStringメソッドを実行でjwttokenを生成、その時にシークレットキーを渡す
 	tokenString, err := token.SignedString([]byte(os.Getenv("SECRET")))
