@@ -20,3 +20,49 @@ type taskUsecase struct {
 func NewTaskRepository(tr repository.ITaskRepository) ITaskusecase {
 	return &taskUsecase{tr}
 }
+
+func (tu *taskUsecase) GetAllTasks(userId uint) ([]model.TaskResponse, error) {
+	tasks := []model.Task{}
+	if err := tu.tr.GetAllTasks(&tasks, userId); err != nil {
+		return nil, err
+	}
+	resTasks := []model.TaskResponse{}
+	// 空のresTasks構造体に取得したtaskをappendする
+	for _, v := range tasks {
+		t := model.TaskResponse{
+			ID: v.ID,
+			Title: v.Title,
+			CreatedAt: v.CreatedAt,
+			UpdatedAt: v.CreatedAt,
+		}
+		resTasks = append(resTasks, t)
+	}
+	return resTasks, nil
+}
+
+func (tu *taskUsecase) CreateTask(task model.Task) (model.TaskResponse, error) {
+	if err := tu.tr.CreateTask(&task); err != nil {
+		return model.TaskResponse{}, err
+	}
+	// CreateTaskが成功したら&taskのアドレスの値が新しい値に書き変わるので新しいtaskでresTaskを作成
+	resTask := model.TaskResponse{
+		ID: task.ID,
+		Title: task.Title,
+		CreatedAt: task.CreatedAt,
+		UpdatedAt: task.UpdatedAt,
+	}
+	return resTask, nil
+}
+
+func (tu *taskUsecase) UpdataTask(task model.Task, userId uint, taskId uint) (model.TaskResponse, error) {
+	if err := tu.tr.UpdateTask(&task, userId, taskId); err != nil {
+		return model.TaskResponse{}, err
+	}
+	resTask := model.TaskResponse{
+		ID: taskId,
+		Title: task.Title,
+		CreatedAt: task.CreatedAt,
+		UpdatedAt: task.UpdatedAt,
+	}
+	return resTask, nil
+}
