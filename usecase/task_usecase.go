@@ -30,8 +30,8 @@ func (tu *taskUsecase) GetAllTasks(userId uint) ([]model.TaskResponse, error) {
 	// 空のresTasks構造体に取得したtaskをappendする
 	for _, v := range tasks {
 		t := model.TaskResponse{
-			ID: v.ID,
-			Title: v.Title,
+			ID:        v.ID,
+			Title:     v.Title,
 			CreatedAt: v.CreatedAt,
 			UpdatedAt: v.CreatedAt,
 		}
@@ -46,8 +46,8 @@ func (tu *taskUsecase) GetTaskById(userId uint, taskId uint) (model.TaskResponse
 		return model.TaskResponse{}, err
 	}
 	resTask := model.TaskResponse{
-		ID: taskId,
-		Title: task.Title,
+		ID:        taskId,
+		Title:     task.Title,
 		CreatedAt: task.CreatedAt,
 		UpdatedAt: task.UpdatedAt,
 	}
@@ -60,8 +60,8 @@ func (tu *taskUsecase) CreateTask(task model.Task) (model.TaskResponse, error) {
 	}
 	// CreateTaskが成功したら&taskのアドレスの値が新しい値に書き変わるので新しいtaskでresTaskを作成
 	resTask := model.TaskResponse{
-		ID: task.ID,
-		Title: task.Title,
+		ID:        task.ID,
+		Title:     task.Title,
 		CreatedAt: task.CreatedAt,
 		UpdatedAt: task.UpdatedAt,
 	}
@@ -73,8 +73,8 @@ func (tu *taskUsecase) UpdateTask(task model.Task, userId uint, taskId uint) (mo
 		return model.TaskResponse{}, err
 	}
 	resTask := model.TaskResponse{
-		ID: taskId,
-		Title: task.Title,
+		ID:        taskId,
+		Title:     task.Title,
 		CreatedAt: task.CreatedAt,
 		UpdatedAt: task.UpdatedAt,
 	}
