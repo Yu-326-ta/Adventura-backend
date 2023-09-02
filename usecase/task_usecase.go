@@ -9,7 +9,7 @@ type ITaskusecase interface {
 	GetAllTasks(userId uint) ([]model.TaskResponse, error)
 	GetTaskById(userId uint, taskId uint) (model.TaskResponse, error)
 	CreateTask(task model.Task) (model.TaskResponse, error)
-	UpdataTask(task model.Task, userId uint, taskId uint) (model.TaskResponse, error)
+	UpdateTask(task model.Task, userId uint, taskId uint) (model.TaskResponse, error)
 	DeleteTask(userId uint, taskId uint) error
 }
 
@@ -68,7 +68,7 @@ func (tu *taskUsecase) CreateTask(task model.Task) (model.TaskResponse, error) {
 	return resTask, nil
 }
 
-func (tu *taskUsecase) UpdataTask(task model.Task, userId uint, taskId uint) (model.TaskResponse, error) {
+func (tu *taskUsecase) UpdateTask(task model.Task, userId uint, taskId uint) (model.TaskResponse, error) {
 	if err := tu.tr.UpdateTask(&task, userId, taskId); err != nil {
 		return model.TaskResponse{}, err
 	}
