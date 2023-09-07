@@ -17,7 +17,7 @@ type taskUsecase struct {
 	tr repository.ITaskRepository
 }
 
-func NewTaskRepository(tr repository.ITaskRepository) ITaskusecase {
+func NewTaskUsecase(tr repository.ITaskRepository) ITaskusecase {
 	return &taskUsecase{tr}
 }
 
