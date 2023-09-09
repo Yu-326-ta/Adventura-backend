@@ -28,7 +28,7 @@ func NewTaskController(tu usecase.ITaskusecase) ITaskController {
 
 func (tc *taskController) GetAllTasks(c echo.Context) error {
 	// userから送られてきたjwttokenをrouterでデコードし、echoのcontext内にuserというフィールドで格納されているので、そこからuserIdを取得
-	user := c.Get("user").(jwt.Token)
+	user := c.Get("user").(*jwt.Token)
 	claims := user.Claims.(jwt.MapClaims)
 	userId := claims["user_id"]
 
@@ -41,7 +41,7 @@ func (tc *taskController) GetAllTasks(c echo.Context) error {
 }
 
 func (tc *taskController) GetTaskById(c echo.Context) error {
-	user := c.Get("user").(jwt.Token)
+	user := c.Get("user").(*jwt.Token)
 	claims := user.Claims.(jwt.MapClaims)
 	userId := claims["user_id"]
 	// リクエストパラメータからtaskIdを取得(取得した値はstring型なのでAtoiでintに変換)
@@ -55,7 +55,7 @@ func (tc *taskController) GetTaskById(c echo.Context) error {
 }
 
 func (tc *taskController) CreateTask(c echo.Context) error {
-	user := c.Get("user").(jwt.Token)
+	user := c.Get("user").(*jwt.Token)
 	claims := user.Claims.(jwt.MapClaims)
 	userId := claims["user_id"]
 
