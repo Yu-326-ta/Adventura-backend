@@ -13,6 +13,6 @@ services:
     restart: always
     networks:
       - lesson
-# dev-mysqlはlessonという名前のネットワークに参加しており、lessonに参加している葉kのコンテナ間で通信可能
+# dev-mysqlはlessonという名前のネットワークに参加しており、lessonに参加しているコンテナ間で通信可能
 networks:
   lesson:
