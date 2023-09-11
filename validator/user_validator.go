@@ -8,7 +8,7 @@ import (
 )
 
 type IUserValidator interface {
-	UserValidate(uer model.User) error
+	UserValidate(user model.User) error
 }
 
 type userValidator struct{}
@@ -23,7 +23,7 @@ func (uv *userValidator) UserValidate(user model.User) error {
 			&user.Email,
 			validation.Required.Error("email is required"),
 			validation.RuneLength(1,30).Error("limited max 30 char"),
-			is.Email.Error("is not valid emial format"),
+			is.Email.Error("is not valid email format"),
 		),
 		validation.Field(
 			&user.Password,

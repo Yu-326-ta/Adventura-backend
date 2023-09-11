@@ -6,14 +6,17 @@ import (
 	"echo-todo-api/repository"
 	"echo-todo-api/router"
 	"echo-todo-api/usecase"
+	"echo-todo-api/validator"
 )
 
 func main() {
 	db := db.NewDB()
+	userValidator := validator.NewUserValidator()
+	taskValidator := validator.NewTaskValidator()
 	userRepository := repository.NewUserRipository(db)
 	taskRepository := repository.NewTaskRipository(db)
-	userUsecase := usecase.NewUserUsecase(userRepository)
-	taskUsecase := usecase.NewTaskUsecase(taskRepository)
+	userUsecase := usecase.NewUserUsecase(userRepository, userValidator)
+	taskUsecase := usecase.NewTaskUsecase(taskRepository, taskValidator)
 	userController := controller.NewUserController(userUsecase)
 	taskController := controller.NewTaskController(taskUsecase)
 	e := router.NerRouter(userController, taskController)
