@@ -1,0 +1,14 @@
+{
+	"mocks": {
+		"usecase/mock_usecase/mock_user_usecase.go": {
+			"checksum": "CCQBGcD71y7ofEmSqN9ahw==",
+			"source_checksum": "0D27LCo+S5kACwFMc4nCuQ==",
+			"mode": "SOURCE_MODE",
+			"source_mode_runner": {
+				"source": "usecase/user_usecase.go",
+				"destination": "usecase/mock_usecase/mock_user_usecase.go",
+				"package": "mock_usecases"
+			}
+		}
+	}
+}
