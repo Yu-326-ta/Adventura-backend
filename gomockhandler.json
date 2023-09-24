@@ -1,5 +1,15 @@
 {
 	"mocks": {
+		"repository/mock_repository/mock_task_repository.go": {
+			"checksum": "nBqhVHpRPb1kipogO2eKMw==",
+			"source_checksum": "gq63aYVtGyMnEVSrQLhTJg==",
+			"mode": "SOURCE_MODE",
+			"source_mode_runner": {
+				"source": "repository/task_repository.go",
+				"destination": "repository/mock_repository/mock_task_repository.go",
+				"package": "mock_repository"
+			}
+		},
 		"repository/mock_repository/mock_user_repository.go": {
 			"checksum": "S5oxHNyKcAfIQXqltZzd7Q==",
 			"source_checksum": "cdFi48lRng02f39V80zOuQ==",
