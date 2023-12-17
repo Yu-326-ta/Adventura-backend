@@ -27,7 +27,7 @@ jobs:
       - name: Build
         run: go build -v ./...
       - name: Run tests
-        run: go test -v ./...
+        run: go test -cover ./... -coverprofile=cover.out
       - name: Upload Go test results
         uses: actions/upload-artifact@v3
         if: always()

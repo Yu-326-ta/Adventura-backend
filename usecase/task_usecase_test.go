@@ -32,7 +32,7 @@ func Test_taskUsecase_GetAllTasks(t *testing.T) {
 		t.Errorf("error! %v", err)
 	}
 	for i, v := range tasks {
-		if v != expected[i+1] {
+		if v != expected[i] {
 			t.Errorf("GetAllTasks() = %v want %v", res, expected)
 		}
 	}
