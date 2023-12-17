@@ -30,6 +30,7 @@ jobs:
         run: go test -v ./...
       - name: Upload Go test results
         uses: actions/upload-artifact@v3
+        if: always()
         with:
           name: Go-results-1.20
           path: ./cover.out
