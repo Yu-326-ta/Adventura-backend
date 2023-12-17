@@ -28,3 +28,9 @@ jobs:
         run: go build -v ./...
       - name: Run tests
         run: go test -v ./...
+      - name: Upload Go test results
+        uses: actions/upload-artifact@v3
+        with:
+          name: Go-results-1.20
+          path: ./cover.out
+          retention-days: 5
