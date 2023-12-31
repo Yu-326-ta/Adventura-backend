@@ -28,9 +28,9 @@ func NerRouter(uc controller.IUserController, tc controller.ITaskController) *ec
 		CookiePath:     "/",
 		CookieDomain:   os.Getenv("API_DOMAIN"),
 		CookieHTTPOnly: true,
-		CookieSameSite: http.SameSiteNoneMode,
+		// CookieSameSite: http.SameSiteNoneMode,
 		// ポストマンで動作確認するためのsamesite
-		// CookieSameSite: http.SameSiteDefaultMode,
+		CookieSameSite: http.SameSiteDefaultMode,
 		// csrfトークンの有効期限の設定
 		//CookieMaxAge:   60,
 	}))

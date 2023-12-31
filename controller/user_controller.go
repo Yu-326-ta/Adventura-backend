@@ -56,7 +56,7 @@ func (uc *userController) LogIn(c echo.Context) error {
 	cookie.Path = "/"
 	cookie.Domain = os.Getenv("API_DOMAIN")
 	// ポストマンで動作確認する時はコメントアウトする
-	cookie.Secure = true
+	// cookie.Secure = true
 	// クライアントのjsからトークンを読み取れないように設定
 	cookie.HttpOnly = true
 	// フロントとバックエンドのドメインが違うクロスドメイン間でのクッキーでの送受信の設定
@@ -75,7 +75,7 @@ func (uc *userController) LogOut(c echo.Context) error {
 	cookie.Expires = time.Now()
 	cookie.Path = "/"
 	cookie.Domain = os.Getenv("API_DOMAIN")
-	cookie.Secure = true
+	// cookie.Secure = true
 	cookie.HttpOnly = true
 	cookie.SameSite = http.SameSiteNoneMode
 	c.SetCookie(cookie)
