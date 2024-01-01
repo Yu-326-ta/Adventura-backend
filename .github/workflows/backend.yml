@@ -67,7 +67,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           known_hosts: ${{ secrets.SSH_KNOWN_HOSTS }}
       - name: "Transfer of Artifact"
-        run: rsync -v todoapp ${host}@4{username}:~/echo-rest-api/todoapp
+        run: rsync -v todoapp ${host}@${username}:~/echo-rest-api/todoapp
         env:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
