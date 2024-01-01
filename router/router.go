@@ -34,6 +34,13 @@ func NerRouter(uc controller.IUserController, tc controller.ITaskController) *ec
 		// csrfトークンの有効期限の設定
 		//CookieMaxAge:   60,
 	}))
+	healthResponse := map[string]string{
+		"status": "ok",
+		"version": "1",
+	}
+	e.GET("/health", func(c echo.Context) error {
+		return c.JSON(http.StatusOK, healthResponse)
+	})
 	e.POST("/signup", uc.SignUp)
 	e.POST("/login", uc.LogIn)
 	e.POST("/logout", uc.LogOut)
