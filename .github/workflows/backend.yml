@@ -18,7 +18,6 @@ jobs:
       - name: golangci-lint
         uses: reviewdog/action-golangci-lint@v2
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
           golangci_lint_flags: "--config=./.backend.yml ./..."
           fail_on_error: true
           reporter: "github-pr-review"
@@ -42,3 +41,44 @@ jobs:
           name: todoapp
           path: ./todoapp
           retention-days: 5
+
+  deploy:
+    needs: build
+    if: github.event_name == "push"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Upload Go build results
+        uses: actions/download-artifact@v3
+        with:
+          name: todoapp
+          path: ./todoapp
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version-file: ./go.mod
+      - name: Install dependencies
+        run: go get .
+      - name: Build
+        run: go build -o todoapp main.go
+      - name: "install ssh key"
+        uses: shimataro/ssh-key-action@v2
+        with:
+          known_host: ${{ secrets.SSH_KNOWN_HOST }}
+          key: ${{ secrets.SSH_KEY }}
+      - name: "Transfer of Artifact"
+        run: rsync -v todoapp ${host}@4{username}:~/echo-rest-api/todoapp
+        env:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+      - name: Deploy to Server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            cd /home/ubuntu/echo-rest-api
+            sudo docker-compose up -d
+            GO_ENV=dev ./todoapp
