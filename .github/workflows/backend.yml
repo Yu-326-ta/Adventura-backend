@@ -64,7 +64,7 @@ jobs:
       - name: "install ssh key"
         uses: shimataro/ssh-key-action@v2
         with:
-          key: ${{ secrets.EC2_KEY }}
+          key: ${{ secrets.SSH_KEY }}
           known_hosts: ${{ secrets.SSH_KNOWN_HOSTS }}
       - name: "Transfer of Artifact"
         run: rsync -v todoapp ${host}@${username}:~/echo-rest-api/todoapp
