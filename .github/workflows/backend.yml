@@ -78,6 +78,6 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            cd /home/ubuntu/echo-rest-api
+            cd /home/${host}/echo-rest-api
             sudo docker-compose up -d
             GO_ENV=dev ./todoapp
