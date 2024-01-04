@@ -74,10 +74,10 @@ jobs:
       - name: Deploy to Server
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
+          host: ${{ secrets.SSH_USERNAME }}
+          username: ${{ secrets.SSH_HOST }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            cd /home/${host}/echo-rest-api
+            cd /home/ubuntu/echo-rest-api
             sudo docker-compose up -d
             GO_ENV=dev ./todoapp
