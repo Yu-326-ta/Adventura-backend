@@ -74,8 +74,8 @@ jobs:
       - name: Deploy to Server
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.SSH_USERNAME }}
-          username: ${{ secrets.SSH_HOST }}
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           script: |
             cd /home/ubuntu/echo-rest-api
