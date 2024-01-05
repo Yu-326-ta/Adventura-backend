@@ -11,10 +11,13 @@ services:
       MYSQL_PASSWORD: udemy
       MYSQL_DATABASE: udemy
     volumes:
-      - ./data:/var/lib/mysql
+      - ./todo_data:/var/lib/mysql
     restart: always
     networks:
       - lesson
+# データの永続化
+volumes:
+  todo_data:
 # dev-mysqlはlessonという名前のネットワークに参加しており、lessonに参加しているコンテナ間で通信可能
 networks:
   lesson:
