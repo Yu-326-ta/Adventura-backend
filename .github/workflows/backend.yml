@@ -80,4 +80,4 @@ jobs:
           script: |
             cd /home/ubuntu/echo-rest-api
             sudo docker-compose up -d
-            GO_ENV=dev ./todoapp
+            GO_ENV=dev ./todoapp &
