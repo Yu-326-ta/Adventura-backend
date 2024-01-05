@@ -81,5 +81,5 @@ jobs:
             cd /home/ubuntu/echo-rest-api
             sudo docker-compose up -d
             PID=`sudo lsof -i :8080 -t`
-            sudo kill $PID
+            sudo kill -9 $PID
             GO_ENV=dev ./todoapp &
