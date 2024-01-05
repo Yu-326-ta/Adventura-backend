@@ -36,7 +36,7 @@ func NerRouter(uc controller.IUserController, tc controller.ITaskController) *ec
 	}))
 	healthResponse := map[string]string{
 		"status": "ok",
-		"version": "1",
+		"version": "2",
 	}
 	e.GET("/health", func(c echo.Context) error {
 		return c.JSON(http.StatusOK, healthResponse)
