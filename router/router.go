@@ -19,7 +19,7 @@ func NerRouter(uc controller.IUserController, tc controller.ITaskController) *ec
 		// リクエストヘッダーに含めるパラメータを設定、echo.HeaderXCSRFTokenでcsrfトークンを送信可能に
 		AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept,
 			echo.HeaderAccessControlAllowHeaders, echo.HeaderXCSRFToken},
-		AllowMethods:     []string{"GET", "PUT", "POST", "DELETE"},
+		AllowMethods: []string{"GET", "PUT", "POST", "DELETE"},
 		// クッキーの送受信を可能にするための設定
 		AllowCredentials: true,
 	}))
@@ -35,7 +35,7 @@ func NerRouter(uc controller.IUserController, tc controller.ITaskController) *ec
 		//CookieMaxAge:   60,
 	}))
 	healthResponse := map[string]string{
-		"status": "ok",
+		"status":  "ok",
 		"version": "7",
 	}
 	e.GET("/health", func(c echo.Context) error {

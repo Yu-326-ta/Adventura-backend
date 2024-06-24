@@ -39,6 +39,7 @@ func NewDB() *gorm.DB {
 
 // データベースのクローズ関数
 func CloseDB(db *gorm.DB) {
+	// .DB()メソッドを使うと、db構造体の実態のアドレスが返ってくる
 	sqlDB, _ := db.DB()
 	if err := sqlDB.Close(); err != nil {
 		log.Fatalln(err)
