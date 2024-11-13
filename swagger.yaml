@@ -1,0 +1,190 @@
+openapi: 3.0.0
+info:
+  version: "1.0.0"
+  title: Adventura API
+  description: ユーザー認証とタスク管理のためのAPI
+servers:
+  - url: http://localhost:8080
+    description: ローカルサーバー
+  - url: ${API_DOMAIN}
+    description: APIサーバー
+
+components:
+  securitySchemes:
+    jwtAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    SignUpRequest:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+      required:
+        - username
+        - password
+    Task:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        completed:
+          type: boolean
+    TaskUpdateRequest:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        completed:
+          type: boolean
+      required:
+        - title
+        - description
+
+paths:
+  /health:
+    get:
+      summary: ヘルスチェック
+      responses:
+        "200":
+          description: APIのヘルスステータス
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  version:
+                    type: string
+
+  /signup:
+    post:
+      summary: ユーザーサインアップ
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SignUpRequest"
+      responses:
+        "200":
+          description: サインアップ成功
+
+  /login:
+    post:
+      summary: ユーザーログイン
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SignUpRequest"
+      responses:
+        "200":
+          description: ログイン成功
+
+  /logout:
+    post:
+      summary: ユーザーログアウト
+      responses:
+        "200":
+          description: ログアウト成功
+
+  /csrf:
+    get:
+      summary: CSRFトークンを取得
+      responses:
+        "200":
+          description: CSRFトークン
+
+  /tasks:
+    get:
+      summary: すべてのタスクを取得
+      security:
+        - jwtAuth: []
+      responses:
+        "200":
+          description: タスクのリスト
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Task"
+
+    post:
+      summary: 新しいタスクを作成
+      security:
+        - jwtAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TaskUpdateRequest"
+      responses:
+        "201":
+          description: タスク作成成功
+
+  /tasks/{taskId}:
+    get:
+      summary: タスクIDでタスクを取得
+      security:
+        - jwtAuth: []
+      parameters:
+        - in: path
+          name: taskId
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: タスクの詳細
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Task"
+
+    put:
+      summary: タスクIDでタスクを更新
+      security:
+        - jwtAuth: []
+      parameters:
+        - in: path
+          name: taskId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TaskUpdateRequest"
+      responses:
+        "200":
+          description: タスク更新成功
+
+    delete:
+      summary: タスクIDでタスクを削除
+      security:
+        - jwtAuth: []
+      parameters:
+        - in: path
+          name: taskId
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: タスク削除成功
