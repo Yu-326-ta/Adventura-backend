@@ -50,10 +50,18 @@ components:
         - title
         - description
 
+tags:
+  - name: User
+    description: ユーザー認証関連の操作
+  - name: Task
+    description: タスク管理関連の操作
+
 paths:
   /health:
     get:
       summary: ヘルスチェック
+      tags:
+        - System
       responses:
         "200":
           description: APIのヘルスステータス
@@ -64,12 +72,16 @@ paths:
                 properties:
                   status:
                     type: string
+                    example: "ok"
                   version:
                     type: string
+                    example: "1"
 
   /signup:
     post:
       summary: ユーザーサインアップ
+      tags:
+        - User
       requestBody:
         required: true
         content:
@@ -83,6 +95,8 @@ paths:
   /login:
     post:
       summary: ユーザーログイン
+      tags:
+        - User
       requestBody:
         required: true
         content:
@@ -96,6 +110,10 @@ paths:
   /logout:
     post:
       summary: ユーザーログアウト
+      tags:
+        - User
+      security:
+        - jwtAuth: []
       responses:
         "200":
           description: ログアウト成功
@@ -103,13 +121,25 @@ paths:
   /csrf:
     get:
       summary: CSRFトークンを取得
+      tags:
+        - User
       responses:
         "200":
           description: CSRFトークン
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  csrf_token:
+                    type: string
+                    example: "Tdv2fQTPHXwcQqVeVigIrrZh5Brcm12c"
 
   /tasks:
     get:
       summary: すべてのタスクを取得
+      tags:
+        - Task
       security:
         - jwtAuth: []
       responses:
@@ -124,6 +154,8 @@ paths:
 
     post:
       summary: 新しいタスクを作成
+      tags:
+        - Task
       security:
         - jwtAuth: []
       requestBody:
@@ -139,6 +171,8 @@ paths:
   /tasks/{taskId}:
     get:
       summary: タスクIDでタスクを取得
+      tags:
+        - Task
       security:
         - jwtAuth: []
       parameters:
@@ -157,6 +191,8 @@ paths:
 
     put:
       summary: タスクIDでタスクを更新
+      tags:
+        - Task
       security:
         - jwtAuth: []
       parameters:
@@ -177,6 +213,8 @@ paths:
 
     delete:
       summary: タスクIDでタスクを削除
+      tags:
+        - Task
       security:
         - jwtAuth: []
       parameters:
