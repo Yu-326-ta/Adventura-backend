@@ -6,7 +6,7 @@ on:
       - main
     paths:
       - swagger.yaml
-      - .github/workflows/swagger.yml
+      - .github/workflows/open-api.yml
 jobs:
   build:
     runs-on: ubuntu-latest
