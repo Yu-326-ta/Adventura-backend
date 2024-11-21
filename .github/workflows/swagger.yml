@@ -23,7 +23,7 @@ jobs:
 
       - name: Validate Swagger Files
         run: |
-          swagger-cli validate -d swagger.yml --type yaml
+          swagger-cli validate -d swagger.yaml --type yaml
 
       - name: Generate Swagger UI
         uses: Legion2/swagger-ui-action@v1
