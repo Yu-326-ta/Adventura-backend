@@ -3,3 +3,5 @@ todo_data
 *.pem
 
 todoapp
+
+.env
