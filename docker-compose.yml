@@ -12,7 +12,7 @@ services:
       MYSQL_DATABASE: udemy
     volumes:
       - ./todo_data:/var/lib/mysql
-    restart: always
+    # restart: always
     networks:
       - lesson
 # データの永続化
