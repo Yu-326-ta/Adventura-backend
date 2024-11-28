@@ -70,7 +70,7 @@ paths:
               schema:
                 type: object
                 properties:
-                  status:
+                  Status:
                     type: string
                     example: "ok"
 
