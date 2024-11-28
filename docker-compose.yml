@@ -1,23 +1,52 @@
-version: "3.8"
+version: '3.8'
 services:
-  dev-mysql:
-    image: mysql:8.0.28
+  mysql:
     platform: linux/amd64
+    image: mysql:8.0.28
+    command: "mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_bin --default-time-zone='+9:00'"
     ports:
-      - 3306:3306
+      - "3306:3306"
     environment:
-      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-      MYSQL_USER: udemy
-      MYSQL_PASSWORD: udemy
-      MYSQL_DATABASE: udemy
+      MYSQL_DATABASE: adventura
+      MYSQL_ALLOW_EMPTY_PASSWORD: "true"
+      MYSQL_USER: adventura
+      MYSQL_PASSWORD: adventura
     volumes:
-      - ./todo_data:/var/lib/mysql
-    # restart: always
-    networks:
-      - lesson
-# データの永続化
-volumes:
-  todo_data:
-# dev-mysqlはlessonという名前のネットワークに参加しており、lessonに参加しているコンテナ間で通信可能
-networks:
-  lesson:
+      - "./.data/mysql:/var/lib/mysql"
+      - "./ddl:/docker-entrypoint-initdb.d"
+    restart: on-failure
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 20s
+      timeout: 1m
+      retries: 5
+      start_period: 10s
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: dev
+    working_dir: "/work/adventura_backend"
+    command: ["air"]
+    volumes:
+      - ".:/work/adventura_backend"
+      - "./.data/go-pkg:/go/pkg/mod/cache"
+    ports:
+      - "8080:8080"
+    environment:
+      ENV: Development
+      MYSQL_DATABASE: adventura
+      MYSQL_USER: adventura
+      MYSQL_PASSWORD: adventura
+      MYSQL_HOST: "mysql:3306"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/api/health"]
+      interval: 1m
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    restart: on-failure

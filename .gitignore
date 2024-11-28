@@ -1,7 +1,7 @@
-todo_data
-
-*.pem
-
-todoapp
-
 .env
+
+.data
+
+build
+
+tmp

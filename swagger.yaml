@@ -57,7 +57,7 @@ tags:
     description: タスク管理関連の操作
 
 paths:
-  /health:
+  /api/health:
     get:
       summary: ヘルスチェック
       tags:
@@ -70,12 +70,9 @@ paths:
               schema:
                 type: object
                 properties:
-                  status:
+                  Status:
                     type: string
                     example: "ok"
-                  version:
-                    type: string
-                    example: "1"
 
   /signup:
     post:
